@@ -4,6 +4,10 @@ This is 300 lines of C++ to make moving rainbow C++ much more faster than anythi
 
 Interesting ideas is to have the mouse influence the waves, or to make other moving plots/shapes
 
+![](images/rainbow_gif.gif)
+![](images/rainbow_window.png)
+
+
 # rainbow_waves.cpp (excerpt)
 
 ```cpp

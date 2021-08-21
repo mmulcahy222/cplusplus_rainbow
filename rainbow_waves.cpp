@@ -116,9 +116,6 @@ COLORREF rainbow_generator(int index)
     int blu;
     int region = (int)floor((index / 255.0) * 6);
     int chunk = (int)((floor(index % 43) / 43) * 255);
-    // cout << region << endl;
-    // cout << chunk << endl;
-    // cout << endl;
     switch (region)
     {
     case 0:
@@ -152,9 +149,6 @@ COLORREF rainbow_generator(int index)
         blu = 255 - chunk;
         break; //magenta
     }
-    // cout << red << endl;
-    // cout << grn << endl;
-    // cout << blu << endl;
     return RGB(red, grn, blu);
 }
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -202,17 +196,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 // (rect.bottom/2-50) is 
                 // cos(seperate_line_iteration) IS THE AMPLITUDE
                 y = rect.bottom / 2 + cos(x / horizontal_wave_distance) * (rect.bottom / 2 - 50) * cos(separate_line_iteration);
-                // if(x == 50) cout << x << " - " << (int)floor(y) << " - " << separate_line_iteration << endl;
-                // cout << endl;
                 //NO LINE SPANNING THE HORIZONTAL SCREN
                 coordinates_line.push_back({x,y});
             }
 
             separate_line_iteration = separate_line_iteration - distance_between_lines;
             coordinates_lines.push_back(coordinates_line);
-            // print(separate_line_iteration);
-            // print(iteration);
-            // print("");
             if(coordinates_lines.size() > line_count)
             {
                 auto line_to_destroy = coordinates_lines.front();
@@ -253,10 +242,6 @@ void DrawLines(HDC hdc, RECT *rect, deque<vector<vector<float>>> coordinates_lin
     float prell;
     COLORREF color;
 
-    // SetDCPenColor(hdcBuffer,RGB(255,0,0));
-    // LineTo(hdcBuffer, 200, 200);
-    // SetDCPenColor(hdcBuffer, RGB(255, 255, 0));
-    // LineTo(hdcBuffer, 400, 400);
     int line_index = 0;
     int line_color_index = 0;
     for (auto coordinates_line : coordinates_lines)
@@ -278,10 +263,8 @@ void DrawLines(HDC hdc, RECT *rect, deque<vector<vector<float>>> coordinates_lin
         line_color_index = (line_color_index < 255) ? line_color_index : 0;
         SetDCPenColor(hdcBuffer, rainbow_generator(line_color_index));
         line_index += color_line_jitter;
-        // print(line_color_index);
     }
     color_index = color_index < 256 ? color_index + hue_variance : 0;
-    // print("");
     BitBlt(hdc, 0, 0,rect->right,rect->bottom, hdcBuffer, 0, 0, SRCCOPY);
     SelectObject(hdcBuffer, hbmOldBuffer);
     DeleteDC(hdcBuffer);
